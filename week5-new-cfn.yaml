@@ -80,6 +80,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-rds-secret
+    DeletionPolicy: Retain
 
   ## NETWORKING (Basic VPC and subnets first)
 
@@ -498,9 +499,9 @@ Resources:
       AllocatedStorage: 20
       DBInstanceClass: db.t3.micro
       Engine: postgres
-      EngineVersion: 15.0
+      EngineVersion: 14.17
       MasterUsername: !Ref DatabaseUsername
-      MasterUserPassword: !GetAtt RDSSecret.SecretString
+      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref RDSSecret, ':SecretString:password}}' ]]
       DBName: !Ref DatabaseName
       Port: !Ref DatabasePort
       MultiAZ: false
@@ -526,6 +527,7 @@ Resources:
       SecretId: !Ref RDSSecret
       TargetId: !Ref PhotoGalleryDB
       TargetType: AWS::RDS::DBInstance
+    DeletionPolicy: Retain
 
   ## SSM PARAMETER STORE
 
@@ -772,7 +774,7 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: !Sub ${EnvironmentName}-load-balancer
+      Name: !Sub ${EnvironmentName}-lb
       Subnets:
         - !Ref PublicSubnet1
         - !Ref PublicSubnet2
@@ -782,7 +784,7 @@ Resources:
       Type: application
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-load-balancer
+          Value: !Sub ${EnvironmentName}-lb
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
