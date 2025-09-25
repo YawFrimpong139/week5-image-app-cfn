@@ -704,7 +704,7 @@ Resources:
       ClusterName: !Sub ${EnvironmentName}-cluster
       Configuration:
         ExecuteCommandConfiguration:
-          Logging: DEFAULT_OVERRIDE
+          Logging: OVERRIDE
           LogConfiguration:
             CloudWatchLogGroupName: !Ref SSMSessionLogGroup
 
