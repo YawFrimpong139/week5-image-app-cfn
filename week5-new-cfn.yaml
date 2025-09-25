@@ -658,10 +658,6 @@ Resources:
                 Resource:
                   - !GetAtt PhotoGalleryBucket.Arn
                   - !Sub ${PhotoGalleryBucket.Arn}/*
-              - Effect: Allow
-                Action:
-                  - rds-db:connect
-                Resource: !Sub arn:aws:rds-db:${AWS::Region}:${AWS::AccountId}:dbuser:${PhotoGalleryDB.DBInstanceResourceId}/${DatabaseUsername}
         
         - PolicyName: SecretsManagerAccess
           PolicyDocument:
