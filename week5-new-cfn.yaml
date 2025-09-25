@@ -657,6 +657,7 @@ Resources:
                   - s3:ListBucket
                 Resource:
                   - !GetAtt PhotoGalleryBucket.Arn
+<<<<<<< HEAD
               - Effect: Allow
                 Action:
                   - s3:PutObject
@@ -664,6 +665,10 @@ Resources:
                   - s3:DeleteObject
                 Resource:
                   - !Sub "${PhotoGalleryBucket.Arn}/*"
+=======
+                  - !Sub ${PhotoGalleryBucket.Arn}/*
+        
+>>>>>>> 707c57978b65bae415e28fc765f2db3d88d8eedf
         - PolicyName: SecretsManagerAccess
           PolicyDocument:
             Version: 2012-10-17
